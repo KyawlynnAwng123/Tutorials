@@ -1,0 +1,156 @@
+{% extends 'layout/main.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="mt-5">
+    {% if messages %} {% for createmessage in messages %}
+    <div class="bg-info py-2 text-white text-center">{{createmessage}}</div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+<div class="container mt-5">
+  <table class="table table-bordered mt-2">
+    <a href="{% url 'createpage' %}" class="btn btn-sm btn-info text-white">Add New Person</a>
+    <a href="{% url 'add-town-page' %}" class="btn btn-sm btn-info text-white" style="margin-left: 5px">Add New Town</a>
+
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>age</th>
+
+        <th>Address</th>
+        <th>Image</th>
+        <th>User</th>
+        <th>Subject</th>
+
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for person in persons %}
+      <tr>
+        <td>{% include 'pages/id_counter.html' %}</td>
+        <td>{{person.name}}</td>
+        <td>{{person.age}}</td>
+        <td>{{person.address}}</td>
+        <td><img src="{{person.imageURL}}" alt="" style="width: 100px" /></td>
+        <td>@{{person.user}}</td>
+        <td>
+          {% for subject in person.subject.all %} {{subject}}, {% endfor %}
+        </td>
+
+        {% if request.user == person.user %}
+        <td>
+          <a href="{% url 'editpage' person.id %}" class="btn btn-sm bg-success text-white">Edit</a>
+          <a href="{% url 'detailpage' person.id %}" class="btn btn-sm bg-info text-white">View</a>
+          <a href="{% url 'deletepage' person.id %}" class="btn btn-sm bg-danger text-white" type="delete">Delete</a>
+        </td>
+        {% else %}
+
+        <td>
+          <a href="" class="btn btn-sm bg-success text-white">Edit</a>
+          <a href="" class="btn btn-sm bg-info text-white">View</a>
+          <a href="" class="btn btn-sm bg-danger text-white" type="delete">Delete</a>
+        </td>
+
+        {% endif %}
+
+        <td></td>
+        <td></td>
+      </tr>
+
+      {% empty %}
+      <span>No Found your results {{new_search}}</span>
+
+      {% endfor %}
+    </tbody>
+  </table>
+  {% comment %}
+  <!-- start pagination -->
+  <!-- <div>
+    <nav aria-label="Page navigation">
+      {% if persons.has_other_pages %}
+
+      <ul class="pagination">
+        {% if persons.has_previous %}
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="?page={{persons.previous_page_number}}"
+            aria-label="Previous"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endcomment %} {% comment %} {% endif %} {% for i in
+        persons.paginator.page_range %} {% if persons.number == i %}
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="?page={{i}}">{{i}}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{i}}">{{i}}</a>
+        </li>
+
+        {% endif %} {% endfor %} {% if persons.has_next %}
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="?page={{persons.next_page_number}}"
+            aria-label="Next"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </nav>
+  </div>
+</div>
+
+<div>
+  {% for subject in subjects %}
+  <div>
+    <h5>{{subject.name}}</h5>
+  </div>
+  {% endfor %}
+</div> -->
+  <!-- end pagination -->
+
+  <h1>{{paginator.num_pages}}</h1>
+  {% endcomment %}
+  {% if persons.has_other_pages %}
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      {% if persons.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?p={{person.previous_page_number}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% for i in persons.paginator.page_range %}
+      {% if persons.number == i %}
+
+      <li class="page-item active" aria-current="page"><a class="page-link" href="?p={{i}}">{{i}}</a></li>
+
+      {% else %}
+
+
+      <li><a class="page-link" href="?p={{i}}">{{i}}</a></li>
+      {% endif %}
+      {% endfor %}
+
+      {% if persons.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?p={{persons.next_page_number}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  {% endif %}
+  {% endblock %}

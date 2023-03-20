@@ -1,0 +1,50 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<div class="container mt-5" style="width:600px;">
+    <div class="bg-info text-white py-2 text-center">
+        <h5>Update Form</h5>
+    </div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3 mt-5">
+            <label for="" class="form-label">Name*</label>
+            <input type="text" class="form-control" name="name" value="{{person.name}}" id=""
+                aria-describedby="emailHelpId" placeholder="@KyawLynnAwng">
+
+        </div>
+        <div class="mb-3 mt-5">
+            <label for="" class="form-label">Age*</label>
+            <input type="number" class="form-control" name="age" value="{{person.age}}" id=""
+                aria-describedby="emailHelpId" placeholder="Enter your age">
+
+        </div>
+        <div class="mb-3 mt-5">
+            <label for="" class="form-label">Town*</label>
+
+            <select name="address" id="" value="{{person.address}}" class="form-control">
+                {% for town in towns %}
+                <option value="{{town.id}}"{% if town.id == person.address_id %}selected{% endif %}>{{town.name}}
+                </option>
+                {% endfor %}
+            </select>
+
+        </div>
+
+        <div class="mb-3 mt-5">
+            <img src="{{person.imageURL}}" class="img-fluid rounded-top" alt="">
+            <label for="" class="form-label">Image*</label>
+            <input type="file" class="form-control" name="image" value="{{person.imageURL}}" id=""
+                aria-describedby="emailHelpId">
+
+        </div>
+        <div>
+            <button type="submit" class="btn btn-sm bg-info text-white">Update</button>
+            <button onclick="history.back()" class="btn btn-sm bg-info text-white">Home</button>
+
+
+
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

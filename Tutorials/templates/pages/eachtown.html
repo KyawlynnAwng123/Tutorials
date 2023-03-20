@@ -1,0 +1,60 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<div class="container mt-5">
+    <table class="table table-bordered">
+        <a href="{% url 'createpage' %}" class="btn btn-info text-white">Add New Student</a>
+        <thead >
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>age</th>
+                
+                <th>Address</th>
+                <th>Image</th>
+                <th>User</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+         {% for person in person_in_eachtown %}
+         {% if person %}
+            <tr>
+               
+               
+                <td>{{person.id}}</td>
+                <td>{{person.name}}</td>
+                <td>{{person.age}}</td>
+                <td>{{person.address}}</td>
+                <td><img src="{{person.imageURL}}" alt="" style="width:100px;"></td>
+                <td></td>
+              
+
+               
+
+                <td>
+                    <a href="{% url 'editpage' person.id %}" class="btn btn-sm bg-success text-white">Edit</a>
+                    <a href="{% url 'detailpage' person.id %}" class="btn btn-sm bg-info text-white">View</a>
+                    <a href="{% url 'deletepage' person.id %}" class="btn btn-sm bg-danger text-white" type="delete">Delete</a>
+                </td>
+                <td>
+                <td>
+                
+                
+                
+              
+
+            </tr>
+         {% else %}
+            <div>
+               <h5 style="color:red;">There is no person in this town</h5>
+            </div>
+         {% endif %}
+           
+         {% endfor %}
+            
+        </tbody>
+    </table>
+   
+</div>
+{% endblock %}

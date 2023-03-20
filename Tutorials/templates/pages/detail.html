@@ -1,0 +1,15 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<div class="container mt-5 text-center">
+   <div class="card-fluid imagethumbnail">
+      <img src="{{person.image.url}}" alt="">
+   </div>
+   <div>
+      <h5>{{person.name}}</h5>
+      {% for subject in person.subject.all %}
+      <h5>{{subject.name}}</h5>
+      {% endfor %}
+   </div>
+</div>
+
+{% endblock %}
